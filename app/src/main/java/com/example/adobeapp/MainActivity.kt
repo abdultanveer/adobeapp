@@ -1,6 +1,7 @@
 package com.example.adobeapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.adobeapp.database.Item
 import com.example.adobeapp.database.ItemDao
 import com.example.adobeapp.database.ItemRoomDatabase
@@ -18,25 +20,59 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    var TAG = MainActivity::class.java.simpleName
+    lateinit var viewModel:MainViewModel
 
     lateinit var dao: ItemDao
     lateinit var tvMain:TextView
 
-    var count:Int = 0
+   // var count:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvMain = findViewById(R.id.maintv)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        tvMain.text = ""+viewModel.count
 
         var database = ItemRoomDatabase.getDatabase(this)
         dao = database.itemDao()
 
+        Log.i(TAG,"actvitiy created")
     }
+
+
 
     override fun onStart() {
         super.onStart()
+        Log.v(TAG,"actvitiy started")
+
     }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e(TAG,"actvitiy paused")
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG,"actvitiy resumed")
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.w(TAG,"actvitiy stopped")
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG,"actvitiy destroyed")
+
+    }
+
 
 
 
@@ -70,7 +106,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun incrementCount(view: View) {
-        count++
-        tvMain.text = ""+count
+        //count++
+        viewModel.incrementCountVar()
+        tvMain.text = ""+viewModel.count
     }
 }
