@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var dao: ItemDao
     lateinit var tvMain:TextView
 
+    var count:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,12 @@ class MainActivity : AppCompatActivity() {
         dao = database.itemDao()
 
     }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+
 
     fun clickHandler(view: View) {
        // showSnackbar()
@@ -60,5 +67,10 @@ class MainActivity : AppCompatActivity() {
 
             tvMain.setText(item.toString())
         }
+    }
+
+    fun incrementCount(view: View) {
+        count++
+        tvMain.text = ""+count
     }
 }
