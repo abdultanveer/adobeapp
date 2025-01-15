@@ -106,8 +106,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun incrementCount(view: View) {
+        //incremenntCounter()
+        viewModel.startTimer()
+        tvMain.text = "" + viewModel._seconds
+
+
+    }
+
+    private fun incremenntCounter() {
         //count++
         viewModel.incrementCountVar()
-        tvMain.text = ""+viewModel.count
+        tvMain.text = "" + viewModel.count
     }
 }
