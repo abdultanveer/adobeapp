@@ -21,9 +21,18 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="insertDb"
         android:onClick="clickHandler"
+        android:text="insertDb"
         app:layout_constraintLeft_toRightOf="@id/maintv"
+        app:layout_constraintTop_toBottomOf="@id/maintv" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="queryDb"
+        android:text="fetch data"
+        app:layout_constraintRight_toLeftOf="@id/maintv"
         app:layout_constraintTop_toBottomOf="@id/maintv"
          />
 

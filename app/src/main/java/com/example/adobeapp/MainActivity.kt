@@ -2,6 +2,7 @@ package com.example.adobeapp
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,17 +12,21 @@ import com.example.adobeapp.database.Item
 import com.example.adobeapp.database.ItemDao
 import com.example.adobeapp.database.ItemRoomDatabase
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var dao: ItemDao
+    lateinit var tvMain:TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        tvMain = findViewById(R.id.maintv)
 
         var database = ItemRoomDatabase.getDatabase(this)
         dao = database.itemDao()
@@ -47,5 +52,13 @@ class MainActivity : AppCompatActivity() {
         var snackbar: Snackbar = Snackbar.make(view, "1 item archived", Snackbar.LENGTH_LONG)
         snackbar.setAction("undo", {})
         snackbar.show()
+    }
+
+    fun queryDb(view: View) {
+        GlobalScope.launch(Dispatchers.Main) {
+            var item = dao.getItems().first()
+
+            tvMain.setText(item.toString())
+        }
     }
 }
