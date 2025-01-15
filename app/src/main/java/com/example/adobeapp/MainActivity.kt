@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.adobeapp.database.Item
 import com.example.adobeapp.database.ItemDao
@@ -41,11 +42,18 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG,"actvitiy created")
     }
 
-
+    var secsObserverphno: Observer<Int> = object : Observer<Int> {
+        override fun onChanged(seconds: Int) {
+            //receiving the update/notification
+            tvMain.setText(seconds.toString())
+        }
+    }
 
     override fun onStart() {
         super.onStart()
         Log.v(TAG,"actvitiy started")
+        viewModel._seconds.observe(this, secsObserverphno);
+    //me giving my phno to the postman
 
     }
 
@@ -118,4 +126,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.incrementCountVar()
         tvMain.text = "" + viewModel.count
     }
+
+
 }
